@@ -52,6 +52,54 @@ unsigned int CborStaticOutput::getSize() {
 }
 
 
+CborDynamicOutput::CborDynamicOutput() {
+    init(256);
+}
+
+CborDynamicOutput::CborDynamicOutput(unsigned int initalCapacity) {
+    init(initalCapacity);
+}
+
+CborDynamicOutput::~CborDynamicOutput() {
+    delete buffer;
+}
+
+void CborDynamicOutput::init(unsigned int initalCapacity) {
+    this->capacity = initalCapacity;
+    this->buffer = new unsigned char[initalCapacity];
+    this->offset = 0;
+}
+
+
+unsigned char *CborDynamicOutput::getData() {
+    return buffer;
+}
+
+unsigned int CborDynamicOutput::getSize() {
+    return offset;
+}
+
+void CborDynamicOutput::putByte(unsigned char value) {
+    if(offset < capacity) {
+        buffer[offset++] = value;
+    } else {
+        capacity *= 2;
+        buffer = (unsigned char *) realloc(buffer, capacity);
+        buffer[offset++] = value;
+    }
+}
+
+void CborDynamicOutput::putBytes(const unsigned char *data, int size) {
+    while(offset + size > capacity) {
+        capacity *= 2;
+        buffer = (unsigned char *) realloc(buffer, capacity);
+    }
+
+    memcpy(buffer + offset, data, size);
+    offset += size;
+}
+
+
 
 void CborWriter::writeTypeAndValue(int majorType, unsigned int value) {
 	majorType <<= 5;

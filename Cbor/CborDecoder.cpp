@@ -443,35 +443,59 @@ void CborReader::Run() {
 
 
 
-  void CborExampleListener::OnInteger(int value) {
-    printf("integer: %d\n", value);
-  }
+// TEST HANDLERS
 
-  void CborExampleListener::OnBytes(unsigned char *data, int size) {
-    printf("bytes with size: %d", size);
-  }
+void CborDebugListener::OnInteger(int value) {
+	Serial.print("integer:");
+	Serial.println(value);
+}
 
-  void CborExampleListener::OnString(String &str) {
-    printf("string: '%.*s'\n", (int)str.size(), str.c_str());
-  }
+void CborDebugListener::OnBytes(unsigned char *data, int size) {
+	Serial.println("bytes with size" + size);
+}
 
-  void CborExampleListener::OnArray(int size) {
-    printf("array: %d\n", size);
-  }
+void CborDebugListener::OnString(String &str) {
+	Serial.print("string:");
+	int lastStringLength = str.length();
+	//Serial.print(lastStringLength);
+	Serial.println(str);
+}
 
-  void CborExampleListener::OnMap(int size) {
-    printf("map: %d\n", size);
-  }
+void CborDebugListener::OnArray(int size) {
+	Serial.println("array:" + size);
+}
 
-  void CborExampleListener::OnTag(unsigned int tag) {
-    printf("tag: %d\n", tag);
-  }
+void CborDebugListener::OnMap(int size) {
+	Serial.println("map:" + size);
+}
 
-  void CborExampleListener::OnSpecial(int code) {
-    printf("special: %d\n", code);
-  }
+void CborDebugListener::OnTag(unsigned int tag) {
+	Serial.println("tag:" + tag);
+}
 
-  void CborExampleListener::OnError(const char *error) {
-    printf("error: %s\n", error);
-  }
+void CborDebugListener::OnSpecial(unsigned int code) {
+	Serial.println("special" + code);
+}
 
+void CborDebugListener::OnError(const char *error) {
+	Serial.print("error:");
+
+	Serial.println(error);
+}
+
+void CborDebugListener::OnExtraInteger(unsigned long long value, int sign) {
+    if(sign >= 0) {
+        Serial.println("extra integer: %llu\n" + value);
+    } else {
+        Serial.println("extra integer: -%llu\n" + value);
+    }
+}
+
+void CborDebugListener::OnExtraTag(unsigned long long tag) {
+    Serial.println("extra tag: %llu\n" + tag);
+}
+
+void CborDebugListener::OnExtraSpecial(unsigned long long tag) {
+    Serial.println("extra special: %llu\n" + tag);
+    
+}

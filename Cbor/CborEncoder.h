@@ -45,6 +45,24 @@ private:
 };
 
 
+class CborDynamicOutput : public CborOutput {
+public:
+    CborDynamicOutput();
+    CborDynamicOutput(unsigned int initalCapacity);
+    ~CborDynamicOutput();
+
+
+    virtual unsigned char *getData();
+    virtual unsigned int getSize();
+    virtual void putByte(unsigned char value);
+    virtual void putBytes(const unsigned char *data, int size);
+private:
+    void init(unsigned int initalCapacity);
+    unsigned char *buffer;
+    unsigned int capacity;
+    unsigned int offset;
+};
+
 class CborWriter {
 public:
 	CborWriter(CborOutput &output);
