@@ -13,35 +13,14 @@
 	   See the License for the specific language governing permissions and
 	   limitations under the License.
 */
-#ifndef CBOR_H
-#define CBOR_H
 
 
 
+
+#ifndef CBOREN_H
+#define CBOREN_H
 
 #include "Arduino.h"
-
-#define INT_MAX 4
-#define INT_MIN 4
-
-
-typedef enum {
-	STATE_TYPE,
-	STATE_PINT,	
-    STATE_NINT,
-    STATE_BYTES_SIZE,
-    STATE_BYTES_DATA,
-    STATE_STRING_SIZE,
-    STATE_STRING_DATA,
-    STATE_ARRAY,
-    STATE_MAP,
-    STATE_TAG,
-    STATE_SPECIAL,
-    STATE_ERROR
-} CborReaderState;
-
-
-
 
 class CborOutput {
 public:
@@ -66,8 +45,30 @@ private:
 };
 
 
+class CborWriter {
+public:
+	CborWriter(CborOutput &output);
+	~CborWriter();
 
+	void writeInt(int value);
+	void writeInt(long long value);
+	void writeInt(unsigned int value);
+	void writeInt(unsigned long long value);
+	void writeBytes(const unsigned char *data, unsigned int size);
+	void writeString(const char *data, unsigned int size);
+	void writeString(const String str);
+	void writeArray(int size);
+	void writeMap(int size);
+	void writeTag(const unsigned int tag);
+	void writeSpecial(int special);
+private:
+	void writeTypeAndValue(int majorType, unsigned int value);
+	void writeTypeAndValue(int majorType, unsigned long long value);
+	CborOutput *output;
+};
 
+class CborSerializable {
+public:
+	virtual void Serialize(CborWriter &writer) = 0;
+};
 #endif
-
-
