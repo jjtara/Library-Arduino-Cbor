@@ -1,5 +1,11 @@
-# Library-Arduino-Cbor
-Arduino Library to use Cbor encoder and one example to use through I2c
+#Library-Arduino-Cbor
+Arduino Library to use Cbor encoder and decoder in Arduino BOARDS based in https://github.com/naphaso/cbor-cpp library.
+ 
+###Install:
+Just copy the folder Cbor in your sketchbook/libraries Folder
 
+###Use:
 
-Right now just work the CBOR encoder though I2C but soon I Will code the decoder!
+Open Arduino IDE ( without it difficult :D)
+
+File -> Examples -> Cbor -> cbortest
