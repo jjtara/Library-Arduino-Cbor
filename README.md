@@ -1,10 +1,10 @@
-# Library-Arduino-Cbor
+#Library-Arduino-Cbor
 Arduino Library to use Cbor encoder and decoder in Arduino BOARDS
 
-Install:
+###Install:
 Just copy the folder Cbor in your sketchbook/libraries Folder
 
-Use:
+###Use:
 
 Open Arduino IDE ( without it difficult :D)
 
