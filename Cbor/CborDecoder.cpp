@@ -1,6 +1,5 @@
 #include "CborDecoder.h"
 #include "Arduino.h"
-#include <stdlib.h>
 
 
 
@@ -343,10 +342,10 @@ void CborReader::Run() {
 			} else break;
 		} else if(state == STATE_STRING_DATA) {
 			if(input->hasBytes(currentLength)) {
-				unsigned char *data = new unsigned char[currentLength];
+				unsigned char data[currentLength];
 				input->getBytes(data, currentLength);
 				state = STATE_TYPE;
-				String str(*data);
+				String str = (const char *) data;
 				listener->OnString(str);
 			} else break;
 		} else if(state == STATE_ARRAY) {
