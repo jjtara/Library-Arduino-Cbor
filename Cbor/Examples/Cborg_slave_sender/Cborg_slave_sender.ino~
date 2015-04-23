@@ -1,32 +1,61 @@
-// Wire Slave Sender
-// by Nicholas Zambetti <http://www.zambetti.com>
-
-// Demonstrates use of the Wire library
-// Sends data as an I2C/TWI slave device
-// Refer to the "Wire Master Reader" example for use with this
-
-// Created 29 March 2006
-
-// This example code is in the public domain.
-
-
+#include <Cbor.h>
+#include <CborWriter.h>
 #include <Wire.h>
 
-void setup()
-{
-  Wire.begin(2);                // join i2c bus with address #2
+
+
+CborStaticOutput output(32);
+CborWriter writer(output);
+int i;
+
+
+void setup() {
+    Wire.begin(2);                // join i2c bus with address #2
   Wire.onRequest(requestEvent); // register event
+ Serial.begin(9600);
+// writting();
 }
 
-void loop()
-{
+void loop() {
+
   delay(100);
+
 }
+
+void writting()
+{
+  writer.writeTag(123);
+  writer.writeArray(3);
+  writer.writeString("hello");
+  writer.writeString("Xun");
+  writer.writeInt(321);
+
+  unsigned char *data = output.getData();
+  int i = output.getSize();
+  
+  //Serial.print(*data);
+  Serial.print(i);
+
+
+}
+
 
 // function that executes whenever data is requested by master
 // this function is registered as an event, see setup()
 void requestEvent()
 {
-  Wire.write("hello "); // respond with message of 6 bytes
+  
+  writer.writeTag(123);
+  writer.writeArray(3);
+  //writer.writeString("hello");
+  writer.writeString("xun");
+
+  unsigned char *data = output.getData();
+  int i = output.getSize();
+  
+  //Serial.print(*data);
+  //Serial.print(i);
+
+  Wire.write(*data); // respond with message of 6 bytes
   // as expected by master
 }

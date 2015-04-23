@@ -1,5 +1,3 @@
-
-
 #include <Wire.h>
 #include <CborDecoder.h>
 
