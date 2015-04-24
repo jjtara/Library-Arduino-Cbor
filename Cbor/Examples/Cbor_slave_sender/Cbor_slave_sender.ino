@@ -1,49 +1,44 @@
+/*
+
+Arduino Sketch to show how Send Encode Cbor package and sending via I2c as Slave requester
+This sketch must to load in the Slave Arduino
+
+Author: Juanjo Tara 
+email:  j.tara@arduino.cc
+date: 	24/04/2015
+*/
+
+
+
+
 #include "CborEncoder.h"
 #include <Wire.h>
 
 
-
-
-
 void setup() {
-    Wire.begin(2);                // join i2c bus with address #2
+  Wire.begin(2);                // join i2c bus with address #2
   Wire.onRequest(requestEvent); // register event
- Serial.begin(9600);
-// writting();
+  Serial.begin(9600);
+  // writting();
 }
 
 void loop() {
-
-  test1();
-  delay(10000);
   
 }
 
-void test1() {
-    CborStaticOutput output(32);
-    CborWriter writer(output);
-    writer.writeInt(124);      
-    //writer.writeString("I");
 
-        
-    unsigned int sizeee = output.getSize();
-    unsigned char *ddata = output.getData();
-    //Serial.print("datalength:");
-    //Serial.println(sizeee);
-    Serial.print(*ddata);
-}
 // function that executes whenever data is requested by master
 // this function is registered as an event, see setup()
 void requestEvent()
 {
 
-
-  //unsigned char *data = output.getData();
-  //int i = output.getSize();
+   //get length and data of cbor package        
+  unsigned char *datapkg = output.getData();
+  int datalength = output.getSize();
   
-  //Serial.print(*data);
-  //Serial.print(i);
+  Serial.print("datalength:");
+  Serial.print(datalength);
+  
+  Wire.write(*datapkg); // respond with message 
 
-  //Wire.write(*data); // respond with message of 6 bytes
-  // as expected by master
 }

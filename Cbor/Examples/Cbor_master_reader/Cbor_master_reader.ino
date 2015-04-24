@@ -1,8 +1,16 @@
+/*
+
+Arduino Sketch to show how decode a Cbor package received from I2c
+This sketch must to load in the master Arduino
+
+Author: Juanjo Tara 
+email:  j.tara@arduino.cc
+date:	24/04/2015
+*/
+
+
 #include <Wire.h>
 #include <CborDecoder.h>
-
-
-
 
 
 void setup()

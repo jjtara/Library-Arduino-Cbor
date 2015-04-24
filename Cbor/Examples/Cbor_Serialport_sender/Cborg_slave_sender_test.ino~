@@ -1,0 +1,36 @@
+#include "CborEncoder.h"
+#include <Wire.h>
+
+
+
+
+
+void setup() {
+  Wire.begin(2);                // join i2c bus with address #2
+  Wire.onRequest(requestEvent); // register event
+  Serial.begin(9600);
+  // writting();
+}
+
+void loop() {
+
+  test1();
+  delay(5000);
+  
+}
+
+
+// function that executes whenever data is requested by master
+// this function is registered as an event, see setup()
+
+
+void requestEvent()
+{
+
+  unsigned char *data = output.getData();
+  int i = output.getSize();
+  Serial.write(*data,i);
+  Serial.print(i);
+  Wire.write(*data); // respond with message 
+
+}
