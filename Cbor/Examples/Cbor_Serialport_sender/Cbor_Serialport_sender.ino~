@@ -38,7 +38,7 @@ void testSerialPort() {
     //print in Serial port the Data length and Cbor in binary
     //Serial.print("datalength:");
     Serial.print(datalength);
-    Serial.write(*datapkg,datalength);
+    Serial.write(datapkg,datalength);
 }
 
 
