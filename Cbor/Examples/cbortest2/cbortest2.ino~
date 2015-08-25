@@ -63,5 +63,5 @@ void test1() {
 	valuein = valuetoInt.toInt();
   
 	Serial.print(valuetoInt.toInt());
-	//Playnote(value);
+
 }

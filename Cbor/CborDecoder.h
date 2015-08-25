@@ -3,8 +3,8 @@
 
 #include "Arduino.h"
 
-#define INT_MAX 4
-#define INT_MIN 4
+#define INT_MAX 2
+#define INT_MIN 2
 
 
 typedef enum {
@@ -23,6 +23,7 @@ typedef enum {
 } CborReaderState;
 
 class CborInput {
+	
 public:
 	CborInput(void *data, int size);
 	~CborInput();
@@ -80,6 +81,7 @@ public:
 	~CborReader();
 	void Run();
 	void SetListener(CborListener &listener);
+	void GetCborData(String &Cborpackage);
 private:
 	CborListener *listener;
 	CborInput *input;
@@ -94,7 +96,7 @@ class CborExampleListener : public CborListener {
     void OnBytes(unsigned char *data, int size);
     void OnString(String &str);
     void OnArray(int size);
-    void OnMap(int size);
+    void OnMap(int size) ;
     void OnTag(unsigned int tag);
     void OnSpecial(int code);
     void OnError(const char *error);

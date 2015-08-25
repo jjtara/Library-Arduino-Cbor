@@ -29,7 +29,7 @@ void CborStaticOutput::putBytes(const unsigned char *data, int size) {
 		memcpy(buffer + offset, data, size);
 		offset += size;
 	} else {
-		Serial.print("buffer overflow error");	
+		Serial.print("buffer overflow error");
 	}
 }
 
@@ -160,7 +160,7 @@ void CborWriter::writeInt(unsigned long long value) {
 
 void CborWriter::writeInt(long long value) {
 	if(value < 0) {
-		writeTypeAndValue(1, (unsigned long long) -value);
+		writeTypeAndValue(1, (unsigned long long) -(value+1));
 	} else {
 		writeTypeAndValue(0, (unsigned long long) value);
 	}
@@ -168,7 +168,7 @@ void CborWriter::writeInt(long long value) {
 
 void CborWriter::writeInt(int value) {
 	if(value < 0) {
-		writeTypeAndValue(1, (unsigned int) -value);
+		writeTypeAndValue(1, (unsigned int) -(value+1));
 	} else {
 		writeTypeAndValue(0, (unsigned int) value);
 	}
@@ -205,4 +205,3 @@ void CborWriter::writeTag(const unsigned int tag) {
 void CborWriter::writeSpecial(int special) {
 	writeTypeAndValue(7, (unsigned int)special);
 }
-

@@ -44,7 +44,7 @@ void test1() {
    	 writer.writeInt(124);
 	writer.writeString("I");
 
-    	Sizeee = output.getSize();
+    	sizeee = output.getSize();
     	Serial.print("datalength:");
     	Serial.println(sizeee);
 
