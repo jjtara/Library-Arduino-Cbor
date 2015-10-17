@@ -30,23 +30,23 @@ Reading:
 ```C++
   class CborExampleListener : public CborListener {
   public:
-    virtual void OnInteger(int value);
-    virtual void OnBytes(unsigned char *data, int size);
+    virtual void OnInteger(int32_t value);
+    virtual void OnBytes(unsigned char *data, unsigned int size);
     virtual void OnString(std::string &str);
-    virtual void OnArray(int size);
-    virtual void OnMap(int size);
-    virtual void OnTag(unsigned int tag);
-    virtual void OnSpecial(int code);
+    virtual void OnArray(unsigned int size);
+    virtual void OnMap(unsigned int size);
+    virtual void OnTag(uint32_t tag);
+    virtual void OnSpecial(uint32_t code);
     virtual void OnError(const char *error);
   };
 
   ...
   
-  void CborExampleListener::OnInteger(int value) {
+  void CborExampleListener::OnInteger(int32_t value) {
     printf("integer: %d\n", value);
   }
   
-  void CborExampleListener::OnBytes(unsigned char *data, int size) {
+  void CborExampleListener::OnBytes(unsigned char *data, unsigned int size) {
     printf("bytes with size: %d", size);
   }
   
@@ -54,11 +54,11 @@ Reading:
     printf("string: '%.*s'\n", (int)str.size(), str.c_str());
   }
   
-  void CborExampleListener::OnArray(int size) {
+  void CborExampleListener::OnArray(unsigned int size) {
     printf("array: %d\n", size);
   }
   
-  void CborExampleListener::OnMap(int size) {
+  void CborExampleListener::OnMap(unsigned int size) {
     printf("map: %d\n", size);
   }
   
@@ -66,7 +66,7 @@ Reading:
     printf("tag: %d\n", tag);
   }
   
-  void CborExampleListener::OnSpecial(int code) {
+  void CborExampleListener::OnSpecial(unsigned int code) {
     printf("special: %d\n", code);
   }
   
