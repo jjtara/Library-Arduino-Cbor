@@ -28,11 +28,11 @@ public:
 	CborInput(void *data, int size);
 	~CborInput();
 
-	bool hasBytes(int count);
+	bool hasBytes(unsigned int count);
 	unsigned char getByte();
 	unsigned short getShort();
-	unsigned int getInt();
-	unsigned long long getLong();
+	uint32_t getInt();
+	uint64_t getLong();
 	void getBytes(void *to, int count);
 private:
 	unsigned char *data;
@@ -45,33 +45,33 @@ private:
 
 class CborListener {
 public:
-	virtual void OnInteger(int value) = 0;
-	virtual void OnBytes(unsigned char *data, int size) = 0;
+	virtual void OnInteger(int32_t value) = 0;
+	virtual void OnBytes(unsigned char *data, unsigned int size) = 0;
 	virtual void OnString(String &str) = 0;
-	virtual void OnArray(int size) = 0;
-	virtual void OnMap(int size) = 0;
-	virtual void OnTag(unsigned int tag) = 0;
-	virtual void OnSpecial(unsigned int code) = 0;
+	virtual void OnArray(unsigned int size) = 0;
+	virtual void OnMap(unsigned int size) = 0;
+	virtual void OnTag(uint32_t tag) = 0;
+	virtual void OnSpecial(uint32_t code) = 0;
 	virtual void OnError(const char *error) = 0;
-    virtual void OnExtraInteger(unsigned long long value, int sign) {}
-    virtual void OnExtraTag(unsigned long long tag) {}
-    virtual void OnExtraSpecial(unsigned long long tag) {}
+    virtual void OnExtraInteger(uint64_t value, int sign) {}
+    virtual void OnExtraTag(uint64_t tag) {}
+    virtual void OnExtraSpecial(uint64_t tag) {}
 };
 
 class CborDebugListener : public CborListener {
 public:
-	virtual void OnInteger(int value);
-	virtual void OnBytes(unsigned char *data, int size);
+	virtual void OnInteger(int32_t value);
+	virtual void OnBytes(unsigned char *data, unsigned int size);
 	virtual void OnString(String &str);
-	virtual void OnArray(int size);
-	virtual void OnMap(int size);
-	virtual void OnTag(unsigned int tag);
-	virtual void OnSpecial(unsigned int code);
+	virtual void OnArray(unsigned int size);
+	virtual void OnMap(unsigned int size);
+	virtual void OnTag(uint32_t tag);
+	virtual void OnSpecial(uint32_t code);
 	virtual void OnError(const char *error);
 
-    virtual void OnExtraInteger(unsigned long long value, int sign);
-    virtual void OnExtraTag(unsigned long long tag);
-    virtual void OnExtraSpecial(unsigned long long tag);
+    virtual void OnExtraInteger(uint64_t value, int sign);
+    virtual void OnExtraTag(uint64_t tag);
+    virtual void OnExtraSpecial(uint64_t tag);
 };
 
 class CborReader {
@@ -86,19 +86,19 @@ private:
 	CborListener *listener;
 	CborInput *input;
 	CborReaderState state;
-	int currentLength;
+	unsigned int currentLength;
 };
 
 
 class CborExampleListener : public CborListener {
   public:
-    void OnInteger(int value);
-    void OnBytes(unsigned char *data, int size);
+    void OnInteger(int32_t value);
+    void OnBytes(unsigned char *data, unsigned int size);
     void OnString(String &str);
-    void OnArray(int size);
-    void OnMap(int size) ;
-    void OnTag(unsigned int tag);
-    void OnSpecial(int code);
+    void OnArray(unsigned int size);
+    void OnMap(unsigned int size) ;
+    void OnTag(uint32_t tag);
+    void OnSpecial(uint32_t code);
     void OnError(const char *error);
   };
 

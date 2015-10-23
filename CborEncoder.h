@@ -27,7 +27,7 @@ public:
     virtual unsigned char *getData() = 0;
     virtual unsigned int getSize() = 0;
     virtual void putByte(unsigned char value) = 0;
-    virtual void putBytes(const unsigned char *data, int size) = 0;
+    virtual void putBytes(const unsigned char *data, const unsigned int size) = 0;
 };
 
 class CborStaticOutput : public CborOutput {
@@ -37,7 +37,7 @@ public:
 	virtual unsigned char *getData();
 	virtual unsigned int getSize();
 	virtual void putByte(unsigned char value);
-	virtual void putBytes(const unsigned char *data, int size);
+	virtual void putBytes(const unsigned char *data, const unsigned int size);
 private:
 	unsigned char *buffer;
 	unsigned int capacity;
@@ -48,14 +48,14 @@ private:
 class CborDynamicOutput : public CborOutput {
 public:
     CborDynamicOutput();
-    CborDynamicOutput(unsigned int initalCapacity);
+    CborDynamicOutput(uint32_t initalCapacity);
     ~CborDynamicOutput();
 
 
     virtual unsigned char *getData();
     virtual unsigned int getSize();
     virtual void putByte(unsigned char value);
-    virtual void putBytes(const unsigned char *data, int size);
+    virtual void putBytes(const unsigned char *data, const unsigned int size);
 private:
     void init(unsigned int initalCapacity);
     unsigned char *buffer;
@@ -68,20 +68,21 @@ public:
 	CborWriter(CborOutput &output);
 	~CborWriter();
 
-	void writeInt(int value);
-	void writeInt(long long value);
-	void writeInt(unsigned int value);
-	void writeInt(unsigned long long value);
-	void writeBytes(const unsigned char *data, unsigned int size);
-	void writeString(const char *data, unsigned int size);
+	void writeInt(const int value);
+	void writeInt(const int32_t value);
+	void writeInt(const int64_t value);
+	void writeInt(const uint32_t value);
+	void writeInt(const uint64_t value);
+	void writeBytes(const unsigned char *data, const unsigned int size);
+	void writeString(const char *data, const unsigned int size);
 	void writeString(const String str);
-	void writeArray(int size);
-	void writeMap(int size);
-	void writeTag(const unsigned int tag);
-	void writeSpecial(int special);
+	void writeArray(const unsigned int size);
+	void writeMap(const unsigned int size);
+	void writeTag(const uint32_t tag);
+	void writeSpecial(const uint32_t special);
 private:
-	void writeTypeAndValue(int majorType, unsigned int value);
-	void writeTypeAndValue(int majorType, unsigned long long value);
+	void writeTypeAndValue(uint8_t majorType, const uint32_t value);
+	void writeTypeAndValue(uint8_t majorType, const uint64_t value);
 	CborOutput *output;
 };
 
